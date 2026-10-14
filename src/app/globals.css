@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Anvaddya Orbit design tokens
+   Orange + white, with deep burnt-orange "night" sections.
+   Contrast notes (WCAG):
+   - brand-700 (#C2410C) on white = 5.2:1  → buttons, links, small text
+   - brand-600 (#EA580C) on white = 3.6:1  → large display text only
+   - brand-500 (#F97316)                   → decoration, or on night bg
+   - brand-400 (#FB923C) on night-900       ≈ 7:1 → accents on dark
+------------------------------------------------------------------- */
+@theme {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  --color-night-700: #5a1d0a;
+  --color-night-800: #4d1808;
+  --color-night-900: #431407;
+  --color-night-950: #2a0c03;
+
+  --color-ink: #1c1917;
+  --color-ink-soft: #57534e;
+  --color-cream: #fff7ed;
+  --color-line: #f1e4d6;
+
+  /* Codex Master Tokens */
+  --color-orbit-orange: #FF6A00;
+  --color-orbit-black: #111111;
+  --color-orbit-muted: #6B7280;
+  --color-orbit-border: #E5E7EB;
+  --color-orbit-bg: #FCFBF8;
+  --color-orbit-white: #FFFFFF;
+
+  --font-sans: var(--font-inter), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-inter: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+
+  --radius-card: 0.75rem;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-orbit: orbit 60s linear infinite;
+  --animate-orbit-reverse: orbit 90s linear infinite reverse;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+:root {
+  --primary-orange: #FF6A00;
+  --near-black: #111111;
+  --secondary-text: #6B7280;
+  --fine-border: #E5E7EB;
+  --canvas-bg: #FCFBF8;
+  --pure-white: #FFFFFF;
+}
+
+/* Bulletproof Explicit Utility Classes */
+.bg-orbit-orange {
+  background-color: #FF6A00 !important;
+}
+.text-orbit-orange {
+  color: #FF6A00 !important;
+}
+.border-orbit-orange {
+  border-color: #FF6A00 !important;
+}
+.border-orbit-border {
+  border-color: #E5E7EB !important;
+}
+.bg-orbit-canvas {
+  background-color: #FCFBF8 !important;
+}
+.bg-orbit-white {
+  background-color: #FFFFFF !important;
+}
+
+/* Pill buttons matching Image 2 */
+.btn-orange-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #FF6A00;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.btn-orange-pill:hover {
+  background-color: #E65F00;
+  transform: translateY(-1px);
+}
+.btn-orange-pill:active {
+  transform: translateY(0);
+}
+
+.btn-white-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  color: #111111;
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+.btn-white-pill:hover {
+  border-color: #111111;
+  background-color: #FCFBF8;
+  transform: translateY(-1px);
+}
+.btn-white-pill:active {
+  transform: translateY(0);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-brand-200 text-ink;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-night :focus-visible {
+    outline-color: var(--color-brand-300);
+  }
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700;
+  }
+  .on-night .eyebrow {
+    @apply text-brand-300;
+  }
+  .on-brand .eyebrow {
+    @apply text-white/90;
+  }
+  .display {
+    @apply font-display font-normal tracking-tight;
+    line-height: 1.04;
+  }
+  .prose-site p + p {
+    @apply mt-4;
+  }
+  /* Long-form legal text */
+  .legal section + section {
+    @apply mt-12 border-t border-line pt-12;
+  }
+  .legal h2 {
+    @apply font-display text-3xl leading-tight text-ink sm:text-4xl;
+  }
+  .legal h3 {
+    @apply mt-6 text-lg font-bold text-ink;
+  }
+  .legal p,
+  .legal ul {
+    @apply mt-4 leading-relaxed text-ink-soft;
+  }
+  .legal ul {
+    @apply list-disc space-y-2 pl-6 marker:text-brand-600;
+  }
+  .legal a {
+    @apply font-semibold text-brand-700 underline underline-offset-2;
+  }
+  .legal strong {
+    @apply font-semibold text-ink;
+  }
+}
+
+/* Scroll reveal — progressive enhancement only.
+   Content is fully visible when unsupported or when reduced motion is requested. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Navigation link animated underline */
+.nav-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: #FF6A00;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-underline:hover::after,
+.nav-underline[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* Circuit signal packet animation */
+@keyframes signalPacket {
+  0% {
+    stroke-dashoffset: 320;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+.animate-signal-packet {
+  animation: signalPacket 4.5s linear infinite;
+}
