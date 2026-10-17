@@ -50,8 +50,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${inter.variable} ${manrope.variable} ${serif.variable}`}>
-      <body>
+    <html
+      lang="en-IN"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+      className={`${inter.variable} ${manrope.variable} ${serif.variable}`}
+    >
+      <head>
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
+      </head>
+      <body suppressHydrationWarning>
         <SitePreloader />
         <AmbientBlueprintLayer />
         <a

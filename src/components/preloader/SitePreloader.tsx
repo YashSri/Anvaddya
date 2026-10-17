@@ -93,7 +93,7 @@ export function SitePreloader() {
     };
   }, []);
 
-  if (isDestroyed || !isMounted) {
+  if (isDestroyed) {
     return null;
   }
 
@@ -104,6 +104,21 @@ export function SitePreloader() {
       role="status"
       aria-live="polite"
       aria-label="Loading Anvaddya Orbit"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 99999,
+        backgroundColor: "#FFFFFF",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100dvh",
+        width: "100vw",
+        opacity: isExiting ? 0 : 1,
+        pointerEvents: isExiting ? "none" : "auto",
+        transition: "opacity 0.4s ease-out",
+        userSelect: "none",
+      }}
       className={`fixed inset-0 z-[99999] flex h-dvh w-screen select-none items-center justify-center bg-[#FFFFFF] transition-opacity duration-400 ease-out ${
         isExiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
