@@ -3,6 +3,7 @@ import { cta } from "@/content/site";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 import { ButtonLink } from "./Button";
 import { Icon, type IconName } from "./Icon";
+import { SchoolPartnershipCta } from "./cta/SchoolPartnershipCta";
 
 /* ---------------------------------------------------------------- PageHero */
 
@@ -203,21 +204,17 @@ export function CtaBand({
   body?: string;
   button?: string;
 }) {
+  const isDefaultTitle = title === "Bring Applied Learning Into Your School";
+  
   return (
-    <section aria-labelledby="cta-band-title" className="on-night on-brand relative overflow-hidden bg-brand-700 text-white">
-      <div aria-hidden className="pointer-events-none absolute -bottom-48 -right-24 h-[30rem] w-[30rem] rounded-full border border-white/20" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-32 -right-8 h-[20rem] w-[20rem] rounded-full border border-white/15" />
-      <div className="container-site relative flex flex-col gap-10 py-20 lg:flex-row lg:items-end lg:justify-between lg:py-24">
-        <div className="max-w-3xl">
-          <h2 id="cta-band-title" className="display text-4xl sm:text-5xl lg:text-6xl">
-            {title}
-          </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90">{body}</p>
-        </div>
-        <ButtonLink href={cta.primary.href} variant="onBrand" className="w-full shrink-0 sm:w-auto">
-          {button}
-        </ButtonLink>
-      </div>
-    </section>
+    <SchoolPartnershipCta
+      eyebrow="READY FOR WHAT'S NEXT?"
+      titleLine1={isDefaultTitle ? "Bring Applied" : title}
+      titleLine2={isDefaultTitle ? "Learning Into" : ""}
+      titleAccent={isDefaultTitle ? "Your School." : ""}
+      body={body}
+      buttonLabel={button}
+      buttonHref={cta.primary.href}
+    />
   );
 }

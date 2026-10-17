@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { CtaBand } from "@/components/blocks";
 import { HeroSection } from "@/components/HeroSection";
 import { TechnologyDomainsSection } from "@/components/domains/TechnologyDomainsSection";
 import { WhatIsOrbitSection } from "@/components/what-is-orbit/WhatIsOrbitSection";
 import { ExploreOrbitSection } from "@/components/explore/ExploreOrbitSection";
+import { SchoolPartnershipCta } from "@/components/cta/SchoolPartnershipCta";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -28,7 +28,8 @@ export default function HomePage() {
       {/* Premium “Explore Orbit” Section — Interactive Cards, Text Reveals & Motion */}
       <ExploreOrbitSection />
 
-      <CtaBand />
+      {/* Premium CTA Section — Bring Applied Learning Into Your School */}
+      <SchoolPartnershipCta />
     </>
   );
 }
