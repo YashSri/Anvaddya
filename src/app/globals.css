@@ -265,3 +265,78 @@
 .animate-signal-packet {
   animation: signalPacket 4.5s linear infinite;
 }
+
+/* ==============================================================================
+   FORGE MASTER ANIMATION CATALOG KEYFRAMES (Adapted to Anvaddya Orbit 2D Engine)
+   ============================================================================== */
+
+/* ANIM-SVG-01: Traveling SVG Perimeter Border Beam */
+@keyframes borderTravel {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -100; }
+}
+.animate-border-beam {
+  animation: borderTravel 14s linear infinite;
+}
+
+/* ANIM-BG-05: Liquid Glass Light Sweep Shimmer */
+@keyframes glassLightSweepNav {
+  0% { transform: translateX(-100%) skewX(-20deg); opacity: 0; }
+  20% { opacity: 0.15; }
+  50% { transform: translateX(200%) skewX(-20deg); opacity: 0.10; }
+  51%, 100% { transform: translateX(200%) skewX(-20deg); opacity: 0; }
+}
+.animate-glass-sweep-nav {
+  animation: glassLightSweepNav 11s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* ANIM-BG-04: Ambient Vector Arcs & Orbiting Dots */
+@keyframes ambientArc {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(24px, -14px, 0); }
+}
+@keyframes ambientDot {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -14px, 0); }
+}
+@keyframes ambientCircle {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-20px, 16px, 0); }
+}
+.animate-ambient-arc { animation: ambientArc 22s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+.animate-ambient-dot { animation: ambientDot 8.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+.animate-ambient-circle { animation: ambientCircle 26s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+/* ANIM-BG-03: Drift & Pulse Builder Nodes */
+@keyframes driftSlow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(15px, -20px, 0); }
+}
+@keyframes driftReverse {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-18px, 14px, 0); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+.animate-drift-slow { animation: driftSlow 10s ease-in-out infinite; }
+.animate-drift-reverse { animation: driftReverse 12s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
+
+/* ANIM-MOD-01: Modal Dialog Entrance */
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-overlay {
+  animation: modalFadeIn 0.18s ease-out forwards;
+}
+.animate-modal-dialog {
+  animation: modalScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

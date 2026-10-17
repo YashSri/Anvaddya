@@ -34,6 +34,29 @@ export function SectionCard({ card, index, isLarge = false }: SectionCardProps) 
         />
       )}
 
+      {/* ANIM-SVG-01: Traveling SVG Perimeter Border Beam */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full overflow-visible z-20"
+        aria-hidden="true"
+      >
+        <rect
+          x="1"
+          y="1"
+          width="calc(100% - 2px)"
+          height="calc(100% - 2px)"
+          rx="15"
+          ry="15"
+          fill="none"
+          stroke="#FF6A00"
+          strokeWidth="1.6"
+          pathLength="100"
+          strokeDasharray="12 88"
+          className={`transition-opacity duration-300 animate-border-beam ${
+            isFeatured ? "opacity-100" : "opacity-0 group-hover:opacity-75"
+          }`}
+        />
+      </svg>
+
       {/* Main Card Content Container: Left Info Area + Right Angled Photo */}
       <div className="relative flex flex-1 items-stretch">
         {/* Left Info Column */}

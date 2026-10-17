@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import { ArrowDown } from "lucide-react";
 import { IMPACT_STATS, type ImpactStat } from "@/content/domainsData";
 
@@ -9,11 +10,50 @@ export function ImpactStatistics() {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [counts, setCounts] = useState<number[]>(IMPACT_STATS.map(() => 0));
 
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
+
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const triggerTicker = () => {
+      if (prefersReducedMotion) {
+        setCounts(IMPACT_STATS.map((m) => m.num));
+        return;
+      }
+
+      if (tweenRef.current) tweenRef.current.kill();
+
+      const state: Record<string, number> = {};
+      IMPACT_STATS.forEach((_, idx) => {
+        state[`val${idx}`] = 0;
+      });
+      setCounts(IMPACT_STATS.map(() => 0));
+
+      const targetProps: Record<string, number> = {};
+      IMPACT_STATS.forEach((stat, idx) => {
+        targetProps[`val${idx}`] = stat.num;
+      });
+
+      tweenRef.current = gsap.to(state, {
+        ...targetProps,
+        duration: 1.8,
+        ease: "power2.out",
+        onUpdate: () => {
+          setCounts(IMPACT_STATS.map((_, idx) => Math.round(state[`val${idx}`] || 0)));
+        },
+        onComplete: () => {
+          setCounts(IMPACT_STATS.map((m) => m.num));
+        },
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
+        if (entries[0]?.isIntersecting) {
+          triggerTicker();
+        } else {
+          // Reset when scrolled past so re-entering triggers ticker again (ANIM-TXT-04)
+          setCounts(IMPACT_STATS.map(() => 0));
         }
       },
       { threshold: 0.25 }
@@ -22,37 +62,11 @@ export function ImpactStatistics() {
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  useEffect(() => {
-    if (!hasAnimated) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      setCounts(IMPACT_STATS.map((m) => m.num));
-      return;
-    }
-
-    const duration = 1200; // ms
-    const startTime = performance.now();
-
-    const frame = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const ease = 1 - (1 - progress) * (1 - progress);
-
-      setCounts(IMPACT_STATS.map((m) => Math.floor(ease * m.num)));
-
-      if (progress < 1) {
-        requestAnimationFrame(frame);
-      } else {
-        setCounts(IMPACT_STATS.map((m) => m.num));
-      }
+    return () => {
+      observer.disconnect();
+      if (tweenRef.current) tweenRef.current.kill();
     };
-
-    const id = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(id);
-  }, [hasAnimated]);
+  }, []);
 
   const handleScrollToNext = () => {
     const nextElem = document.getElementById("what-title");

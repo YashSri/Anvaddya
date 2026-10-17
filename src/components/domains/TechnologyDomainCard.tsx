@@ -50,10 +50,33 @@ export function TechnologyDomainCard({
       {/* Top connector node for active card (Tony Stark circuit alignment) */}
       {isActive && (
         <span
-          className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-3 w-3 bg-[#FF6A00] rounded-xs z-20 shadow-xs"
+          className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-3 w-3 bg-[#FF6A00] rounded-xs z-30 shadow-xs"
           aria-hidden="true"
         />
       )}
+
+      {/* ANIM-SVG-01: Traveling SVG Perimeter Border Beam */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full overflow-visible z-20"
+        aria-hidden="true"
+      >
+        <rect
+          x="1"
+          y="1"
+          width="calc(100% - 2px)"
+          height="calc(100% - 2px)"
+          rx="15"
+          ry="15"
+          fill="none"
+          stroke="#FF6A00"
+          strokeWidth="1.6"
+          pathLength="100"
+          strokeDasharray="12 88"
+          className={`transition-opacity duration-300 animate-border-beam ${
+            isActive ? "opacity-100" : "opacity-0 group-hover:opacity-75"
+          }`}
+        />
+      </svg>
 
       {/* LEFT HALF (~50% width): Editorial Metadata */}
       <div className="flex w-[50%] flex-col justify-between p-5 sm:p-6 bg-white z-10">

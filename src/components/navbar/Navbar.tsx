@@ -48,7 +48,36 @@ export function Navbar() {
   const [programmeOpen, setProgrammeOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // ANIM-PIN-02: Liquid Glass Dynamic Navbar Collapse & Spring-Back
+  useEffect(() => {
+    const THRESHOLD = 12;
+    let lastScrollY = window.scrollY || 0;
+    let idleTimer: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      const y = window.scrollY || 0;
+      if (y > lastScrollY + THRESHOLD && y > 80) {
+        setIsCompact(true);
+      } else if (y < lastScrollY - THRESHOLD) {
+        setIsCompact(false);
+      }
+      lastScrollY = y;
+
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        setIsCompact(false);
+      }, 700);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(idleTimer);
+    };
+  }, []);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -82,10 +111,26 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full px-4 sm:px-6 pt-4 pb-2">
-        <div className="mx-auto flex h-[68px] w-full max-w-[1360px] items-center justify-between rounded-full border border-gray-200/90 bg-white px-5 sm:px-8 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] transition-all">
+      <header
+        className={`sticky top-0 z-40 w-full px-4 sm:px-6 transition-all duration-300 ease-out ${
+          isCompact ? "pt-2 pb-1" : "pt-4 pb-2"
+        }`}
+      >
+        <div
+          className={`mx-auto flex w-full max-w-[1360px] items-center justify-between rounded-full border border-gray-200/90 bg-white px-5 sm:px-8 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] relative overflow-hidden transition-all duration-300 ${
+            isCompact ? "h-[58px] shadow-md" : "h-[68px]"
+          }`}
+        >
+          {/* ANIM-BG-05: Specular Sheen Sweep across Navbar Capsule */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden select-none"
+          >
+            <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-[#FF6A00]/08 to-transparent animate-glass-sweep-nav pointer-events-none" />
+          </div>
+
           {/* LEFT: Logo Lockup & Divider */}
-          <div className="flex items-center">
+          <div className="relative z-10 flex items-center">
             <BrandLogoLockup />
             <div className="hidden lg:block h-6 w-px bg-gray-200 ml-6 mr-8" aria-hidden="true" />
           </div>
@@ -157,11 +202,17 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[0.92rem] font-medium transition-colors ${
+                  className={`group relative py-1 text-[0.92rem] font-medium transition-colors ${
                     isActive ? "text-[#FF6A00] font-semibold" : "text-[#111111] hover:text-[#FF6A00]"
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute -bottom-1 left-0 h-[2px] w-full bg-[#FF6A00] rounded-full transition-transform duration-200 origin-left ${
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
                 </Link>
               );
             })}

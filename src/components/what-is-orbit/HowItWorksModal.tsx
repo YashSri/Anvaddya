@@ -36,15 +36,15 @@ export function HowItWorksModal({ isOpen, onClose }: HowItWorksModalProps) {
       aria-labelledby="how-it-works-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8"
     >
-      {/* Dimmed backdrop */}
+      {/* Dimmed backdrop with ANIM-MOD-01 */}
       <div
-        className="fixed inset-0 bg-[#111111]/60 backdrop-blur-xs transition-opacity duration-300"
+        className="fixed inset-0 bg-[#111111]/60 backdrop-blur-xs animate-modal-overlay"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal Surface */}
-      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#E5E7EB] bg-[#FCFBF8] p-6 sm:p-10 shadow-2xl">
+      {/* Modal Surface with ANIM-MOD-01 */}
+      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-[#E5E7EB] bg-[#FCFBF8] p-6 sm:p-10 shadow-2xl animate-modal-dialog">
         {/* Header with Close Button */}
         <div className="flex items-start justify-between gap-4 border-b border-[#E5E7EB] pb-6">
           <div>

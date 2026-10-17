@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { StickyCta } from "@/components/StickyCta";
 import { SitePreloader } from "@/components/preloader/SitePreloader";
+import { AmbientBlueprintLayer } from "@/components/shared/AmbientBlueprintLayer";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-IN" className={`${inter.variable} ${manrope.variable} ${serif.variable}`}>
       <body>
         <SitePreloader />
+        <AmbientBlueprintLayer />
         <a
           href="#main"
           className="sr-only z-[100] rounded-full bg-brand-700 px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"

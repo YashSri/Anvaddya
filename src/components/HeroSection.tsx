@@ -18,10 +18,22 @@ export function HeroSection() {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.fromTo(
-        ".hero-eyebrow",
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.5 }
+        ".hero-eyebrow-dot",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4 }
       )
+        .fromTo(
+          ".hero-eyebrow",
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.45 },
+          "-=0.2"
+        )
+        .fromTo(
+          ".hero-eyebrow-line",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.6, ease: "power3.out", transformOrigin: "left center" },
+          "-=0.3"
+        )
         .fromTo(
           ".hero-headline-line",
           { y: "110%", opacity: 0 },
